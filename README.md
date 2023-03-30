@@ -16,6 +16,16 @@
 - [5. dot](#5-dot)
 - [6. lilypond](#6-lilypond)
 - [7. e2c / c2e](#7-e2c--c2e)
+- [8. man](#8-man)
+- [9. bash5 in macOS](#9-bash5-in-macos)
+  - [9.1 install](#91-install)
+  - [9.2 bash completion](#92-bash-completion)
+  - [9.3 bash常用设置](#93-bash常用设置)
+    - [9.3.1  ~/.bashrc](#931--bashrc)
+    - [9.3.2 ~/.bash\_profile](#932-bash_profile)
+    - [9.3.3 ~/.hg-prompt.sh](#933-hg-promptsh)
+    - [9.3.4 ~/.git-prompt.sh](#934-git-promptsh)
+    
 
 ## 1. useful command line tools ( written in rust/go/c )
 
@@ -524,9 +534,11 @@ $ cat lily
 
 ## 7. e2c / c2e
 
-1. 下载、本地启动翻译服务： https://github.com/OwO-Network/DeepLX
+(1) 下载、本地启动翻译服务：
 
-2. e2c 如下（将zh改为en，则是c2e）
+https://github.com/OwO-Network/DeepLX
+
+(2) e2c 如下（将zh改为en，则是c2e）
 
 ```
 $ cat /usr/local/bin/e2c
@@ -536,4 +548,828 @@ if test -f "$1"; then
 else
   xh http://localhost:1188/translate target_lang=zh text="${1}"
 fi
+```
+## 8. man
+
+复制相关配置到 /usr/local/share/man/man1/ , 以 exa 为例：
+
+```
+cp ~/Downloads/exa-macos-x86_64-v0.10.1/man/exa.1  /usr/local/share/man/man1/
+
+man exa
+```
+
+## 9. bash5 in macOS
+
+### 9.1 安装 bash 和 bash completion
+
+(1) install
+
+```
+brew install bash-completion@2  # 没有 @2 适用于 bash3 等低版本。 @2 适用于 bash4.2+ 版本。
+
+sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'  # 将 bash 5 添加到系统 shells
+
+chsh -s /usr/local/bin/bash # 修改当前用户的默认 shell
+
+#sudo chsh -s /usr/local/bin/bash # 修改系统默认 shell
+```
+
+(2) 增加以下配置到 .bash_profile：
+
+```
+  [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+```
+
+其功能大致相当于下面这几行（但是会先判断为较高的 bash 版本，才执行then）
+
+```
+#if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+#   . /usr/local/share/bash-completion/bash_completion
+#fi
+```
+
+### 9.2 bash completion
+
+(1) 复制相关配置到 bash_completion.d/ , 以 fd 为例：
+
+```
+cp ~/fd-v8.3.2-x86_64-apple-darwin/autocomplete/fd.bash /usr/local/etc/bash_completion.d/
+
+(2) 重启 iterm，输入命令，按两下 TAB 键，自动完成
+
+fd - <TAB> <TAB>
+
+(3) 安装命令和配置目录对比
+
+```
+
+| | ubuntu  | MacOS  |
+| ------------ | ------------ | ------------ |
+| 安装命令 | apt install ...  |  brew install ... |
+| 配置目录 |/etc/bash_completion.d   | /usr/local/etc/bash_completion.d  |
+
+(4) 常用的一些 bash_completion:
+
+```
+$ exa --oneline /usr/local/etc/bash_completion.d
+aria2c.bash
+bat.bash
+delta.bash
+docker.bash
+exa.bash
+fd.bash
+fnm.bash
+frum.bash
+fzf.bash
+git.bash
+hg-completion.bash
+kubectl.bash
+m.bash
+mtr.bash
+rg.bash
+rvm.bash
+task.bash
+tldr-c.bash
+xh.bash
+xmake.bash
+yq.bash
+zoxide.bash
+```
+
+### 9.3 bash常用设置
+
+#### 9.3.1  ~/.bashrc
+
+(1) 增加一些常用命令的相关设置，并增加两行用于 hg 和 git 命令的 prompt.sh
+
+```
+# zoxide
+eval "$(zoxide init bash)"
+
+# fzf
+export FZF_DEFAULT_COMMAND='fd --type f'
+
+# fnm
+export FNM_DIR="$HOME/.fnm"
+eval "$(fnm env --use-on-cd)"
+export FNM_LOGLEVEL=error
+
+# git prompt
+source ~/.git-prompt.sh
+
+# hg prompt
+source ~/.hg-prompt.sh
+```
+
+#### 9.3.2 ~/.bash_profile
+
+(2) 增加 PS1 (带有 __hg_ps1 和 __git_ps1)。用 -K 或 --apple-use-keychain，添加带密码的私钥。就不必每次都输入密码。
+
+```
+export PS1='\[\033[0;35m\]\u\[\033[m\]@\[\033[0;32m\]\h \[\033[1;34m\]\w$(__hg_ps1 " (%s)")$(__git_ps1 " (%s)")\[\033[m\]\$ '
+
+# add ssh key at the first time
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519_xxxx
+
+source ~/.bashrc
+```
+
+(3) 进入hg或git的目录，就会在目录名旁边显示当前分支或版本号。示意如下：
+
+```
+ian@iandeiMac ~/git_test/feather (master)$
+```
+
+#### 9.3.3 ~/.hg-prompt.sh
+
+```
+# bash hg prompt support
+#
+# Copyright (c) 2018 Stephane Moore
+# Distributed under the MIT License.
+#
+# To enable:
+#
+#    1) Copy this file to somewhere (e.g. ~/.hg-prompt.sh).
+#    2) Add the following line to your .bashrc:
+#        source ~/.hg-prompt.sh
+#    3) Change your PS1 to call __hg_ps1:
+#       Bash: PS1='[\u@\h \W$(__hg_ps1 " (%s)")]\$ '
+#       the optional argument will be used as format string.
+
+# Constructs a prompt string for the Mercurial repository containing the current working directory
+# or nothing if the current working directory is not within a Mercurial repository.
+#
+# If the HG_PS1_TAGSTEMPLATE environment variable is set, tags will be
+# retrieved using the specified template for tags. If this environment
+# variable is not set, the template "{tags}" will be used.
+__hg_ps1() {
+  local exit_code=$?
+
+  local hg_root="$(hg root 2>/dev/null)"
+
+  if [ -z "${hg_root}" ]; then
+    return ${exit_code}
+  fi
+
+  local printf_format=" (%s)"
+  if [ "$#" -ge 1 ]; then
+    printf_format="$1"
+  fi
+
+  # Show * for modified files, + for added files, and % for untracked files.
+  local hg_display_modifiers=""
+  local hg_status_summary="$(hg status | cut -c 1)"
+  if [[ "${hg_status_summary}" =~ .*M.* ]]; then
+    hg_display_modifiers="${hg_display_modifiers}*"
+  fi
+  if [[ "${hg_status_summary}" =~ .*A.* ]]; then
+    hg_display_modifiers="${hg_display_modifiers}+"
+  fi
+  if [[ "${hg_status_summary}" =~ .*\?.* ]]; then
+    hg_display_modifiers="${hg_display_modifiers}%"
+  fi
+
+  # Begin constructing the prompt string moving backwards.
+  local hg_prompt=""
+  if [ "${hg_display_modifiers}" != "" ]; then
+    hg_prompt=" ${hg_display_modifiers}"
+  fi
+
+  # Check for an active bookmark.
+  local hg_current_bookmark="${hg_root}/.hg/bookmarks.current"
+  if [ -e "${hg_current_bookmark}" ]; then
+    local hg_bookmark_name=$(cat "${hg_current_bookmark}")
+    hg_prompt="${hg_bookmark_name}${hg_prompt}"
+    printf -- "$1" "${hg_prompt}"
+    return ${exit_code}
+  fi
+
+  # Check for a tag on the current commit.
+  local hg_default_tags_template="{tags}"
+  local hg_tags_template="${HG_PS1_TAGSTEMPLATE-$hg_default_tags_template}"
+  local hg_tags="$(hg log -r . --template "${hg_tags_template}")"
+  local hg_tag_array=( $hg_tags )
+  if [ ${#hg_tag_array[@]} -ne 0 ]; then
+    for hg_tag in "${hg_tag_array[@]}"
+    do
+      if [ "${hg_tag}" != "tip" ]; then
+        hg_prompt="${hg_tag}${hg_prompt}"
+        printf -- "$1" "${hg_prompt}"
+        return ${exit_code}
+      fi
+    done
+  fi
+
+  # In the absence of other information, simply display the changeset identifier.
+  local hg_changeset_id_hash="$(hg log -r . --template '({node|short})')"
+  hg_prompt="${hg_changeset_id_hash}${hg_prompt}"
+  printf -- "$1" "${hg_prompt}"
+  return ${exit_code}
+}
+```
+
+#### 9.3.4 ~/.git-prompt.sh
+
+```
+# bash/zsh git prompt support
+#
+# Copyright (C) 2006,2007 Shawn O. Pearce <spearce@spearce.org>
+# Distributed under the GNU General Public License, version 2.0.
+#
+# This script allows you to see repository status in your prompt.
+#
+# To enable:
+#
+#    1) Copy this file to somewhere (e.g. ~/.git-prompt.sh).
+#    2) Add the following line to your .bashrc/.zshrc:
+#        source ~/.git-prompt.sh
+#    3a) Change your PS1 to call __git_ps1 as
+#        command-substitution:
+#        Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+#        ZSH:  setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+#        the optional argument will be used as format string.
+#    3b) Alternatively, for a slightly faster prompt, __git_ps1 can
+#        be used for PROMPT_COMMAND in Bash or for precmd() in Zsh
+#        with two parameters, <pre> and <post>, which are strings
+#        you would put in $PS1 before and after the status string
+#        generated by the git-prompt machinery.  e.g.
+#        Bash: PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
+#          will show username, at-sign, host, colon, cwd, then
+#          various status string, followed by dollar and SP, as
+#          your prompt.
+#        ZSH:  precmd () { __git_ps1 "%n" ":%~$ " "|%s" }
+#          will show username, pipe, then various status string,
+#          followed by colon, cwd, dollar and SP, as your prompt.
+#        Optionally, you can supply a third argument with a printf
+#        format string to finetune the output of the branch status
+#
+# The repository status will be displayed only if you are currently in a
+# git repository. The %s token is the placeholder for the shown status.
+#
+# The prompt status always includes the current branch name.
+#
+# In addition, if you set GIT_PS1_SHOWDIRTYSTATE to a nonempty value,
+# unstaged (*) and staged (+) changes will be shown next to the branch
+# name.  You can configure this per-repository with the
+# bash.showDirtyState variable, which defaults to true once
+# GIT_PS1_SHOWDIRTYSTATE is enabled.
+#
+# You can also see if currently something is stashed, by setting
+# GIT_PS1_SHOWSTASHSTATE to a nonempty value. If something is stashed,
+# then a '$' will be shown next to the branch name.
+#
+# If you would like to see if there're untracked files, then you can set
+# GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If there're untracked
+# files, then a '%' will be shown next to the branch name.  You can
+# configure this per-repository with the bash.showUntrackedFiles
+# variable, which defaults to true once GIT_PS1_SHOWUNTRACKEDFILES is
+# enabled.
+#
+# If you would like to see the difference between HEAD and its upstream,
+# set GIT_PS1_SHOWUPSTREAM="auto".  A "<" indicates you are behind, ">"
+# indicates you are ahead, "<>" indicates you have diverged and "="
+# indicates that there is no difference. You can further control
+# behaviour by setting GIT_PS1_SHOWUPSTREAM to a space-separated list
+# of values:
+#
+#     verbose       show number of commits ahead/behind (+/-) upstream
+#     name          if verbose, then also show the upstream abbrev name
+#     legacy        don't use the '--count' option available in recent
+#                   versions of git-rev-list
+#     git           always compare HEAD to @{upstream}
+#     svn           always compare HEAD to your SVN upstream
+#
+# By default, __git_ps1 will compare HEAD to your SVN upstream if it can
+# find one, or @{upstream} otherwise.  Once you have set
+# GIT_PS1_SHOWUPSTREAM, you can override it on a per-repository basis by
+# setting the bash.showUpstream config variable.
+#
+# You can change the separator between the branch name and the above
+# state symbols by setting GIT_PS1_STATESEPARATOR. The default separator
+# is SP.
+#
+# When there is an in-progress operation such as a merge, rebase,
+# revert, cherry-pick, or bisect, the prompt will include information
+# related to the operation, often in the form "|<OPERATION-NAME>".
+#
+# When the repository has a sparse-checkout, a notification of the form
+# "|SPARSE" will be included in the prompt.  This can be shortened to a
+# single '?' character by setting GIT_PS1_COMPRESSSPARSESTATE, or omitted
+# by setting GIT_PS1_OMITSPARSESTATE.
+#
+# If you would like to see a notification on the prompt when there are
+# unresolved conflicts, set GIT_PS1_SHOWCONFLICTSTATE to "yes". The
+# prompt will include "|CONFLICT".
+#
+# If you would like to see more information about the identity of
+# commits checked out as a detached HEAD, set GIT_PS1_DESCRIBE_STYLE
+# to one of these values:
+#
+#     contains      relative to newer annotated tag (v1.6.3.2~35)
+#     branch        relative to newer tag or branch (master~4)
+#     describe      relative to older annotated tag (v1.6.3.1-13-gdd42c2f)
+#     tag           relative to any older tag (v1.6.3.1-13-gdd42c2f)
+#     default       exactly matching tag
+#
+# If you would like a colored hint about the current dirty state, set
+# GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
+# the colored output of "git status -sb" and are available only when
+# using __git_ps1 for PROMPT_COMMAND or precmd in Bash,
+# but always available in Zsh.
+#
+# If you would like __git_ps1 to do nothing in the case when the current
+# directory is set up to be ignored by git, then set
+# GIT_PS1_HIDE_IF_PWD_IGNORED to a nonempty value. Override this on the
+# repository level by setting bash.hideIfPwdIgnored to "false".
+
+# check whether printf supports -v
+__git_printf_supports_v=
+printf -v __git_printf_supports_v -- '%s' yes >/dev/null 2>&1
+
+# stores the divergence from upstream in $p
+# used by GIT_PS1_SHOWUPSTREAM
+__git_ps1_show_upstream ()
+{
+	local key value
+	local svn_remote svn_url_pattern count n
+	local upstream_type=git legacy="" verbose="" name=""
+
+	svn_remote=()
+	# get some config options from git-config
+	local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
+	while read -r key value; do
+		case "$key" in
+		bash.showupstream)
+			GIT_PS1_SHOWUPSTREAM="$value"
+			if [[ -z "${GIT_PS1_SHOWUPSTREAM}" ]]; then
+				p=""
+				return
+			fi
+			;;
+		svn-remote.*.url)
+			svn_remote[$((${#svn_remote[@]} + 1))]="$value"
+			svn_url_pattern="$svn_url_pattern\\|$value"
+			upstream_type=svn+git # default upstream type is SVN if available, else git
+			;;
+		esac
+	done <<< "$output"
+
+	# parse configuration values
+	local option
+	for option in ${GIT_PS1_SHOWUPSTREAM}; do
+		case "$option" in
+		git|svn) upstream_type="$option" ;;
+		verbose) verbose=1 ;;
+		legacy)  legacy=1  ;;
+		name)    name=1 ;;
+		esac
+	done
+
+	# Find our upstream type
+	case "$upstream_type" in
+	git)    upstream_type="@{upstream}" ;;
+	svn*)
+		# get the upstream from the "git-svn-id: ..." in a commit message
+		# (git-svn uses essentially the same procedure internally)
+		local -a svn_upstream
+		svn_upstream=($(git log --first-parent -1 \
+					--grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
+		if [[ 0 -ne ${#svn_upstream[@]} ]]; then
+			svn_upstream=${svn_upstream[${#svn_upstream[@]} - 2]}
+			svn_upstream=${svn_upstream%@*}
+			local n_stop="${#svn_remote[@]}"
+			for ((n=1; n <= n_stop; n++)); do
+				svn_upstream=${svn_upstream#${svn_remote[$n]}}
+			done
+
+			if [[ -z "$svn_upstream" ]]; then
+				# default branch name for checkouts with no layout:
+				upstream_type=${GIT_SVN_ID:-git-svn}
+			else
+				upstream_type=${svn_upstream#/}
+			fi
+		elif [[ "svn+git" = "$upstream_type" ]]; then
+			upstream_type="@{upstream}"
+		fi
+		;;
+	esac
+
+	# Find how many commits we are ahead/behind our upstream
+	if [[ -z "$legacy" ]]; then
+		count="$(git rev-list --count --left-right \
+				"$upstream_type"...HEAD 2>/dev/null)"
+	else
+		# produce equivalent output to --count for older versions of git
+		local commits
+		if commits="$(git rev-list --left-right "$upstream_type"...HEAD 2>/dev/null)"
+		then
+			local commit behind=0 ahead=0
+			for commit in $commits
+			do
+				case "$commit" in
+				"<"*) ((behind++)) ;;
+				*)    ((ahead++))  ;;
+				esac
+			done
+			count="$behind	$ahead"
+		else
+			count=""
+		fi
+	fi
+
+	# calculate the result
+	if [[ -z "$verbose" ]]; then
+		case "$count" in
+		"") # no upstream
+			p="" ;;
+		"0	0") # equal to upstream
+			p="=" ;;
+		"0	"*) # ahead of upstream
+			p=">" ;;
+		*"	0") # behind upstream
+			p="<" ;;
+		*)	    # diverged from upstream
+			p="<>" ;;
+		esac
+	else # verbose, set upstream instead of p
+		case "$count" in
+		"") # no upstream
+			upstream="" ;;
+		"0	0") # equal to upstream
+			upstream="|u=" ;;
+		"0	"*) # ahead of upstream
+			upstream="|u+${count#0	}" ;;
+		*"	0") # behind upstream
+			upstream="|u-${count%	0}" ;;
+		*)	    # diverged from upstream
+			upstream="|u+${count#*	}-${count%	*}" ;;
+		esac
+		if [[ -n "$count" && -n "$name" ]]; then
+			__git_ps1_upstream_name=$(git rev-parse \
+				--abbrev-ref "$upstream_type" 2>/dev/null)
+			if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
+				upstream="$upstream \${__git_ps1_upstream_name}"
+			else
+				upstream="$upstream ${__git_ps1_upstream_name}"
+				# not needed anymore; keep user's
+				# environment clean
+				unset __git_ps1_upstream_name
+			fi
+		fi
+	fi
+
+}
+
+# Helper function that is meant to be called from __git_ps1.  It
+# injects color codes into the appropriate gitstring variables used
+# to build a gitstring. Colored variables are responsible for clearing
+# their own color.
+__git_ps1_colorize_gitstring ()
+{
+	if [[ -n ${ZSH_VERSION-} ]]; then
+		local c_red='%F{red}'
+		local c_green='%F{green}'
+		local c_lblue='%F{blue}'
+		local c_clear='%f'
+	else
+		# Using \[ and \] around colors is necessary to prevent
+		# issues with command line editing/browsing/completion!
+		local c_red='\[\e[31m\]'
+		local c_green='\[\e[32m\]'
+		local c_lblue='\[\e[1;34m\]'
+		local c_clear='\[\e[0m\]'
+	fi
+	local bad_color=$c_red
+	local ok_color=$c_green
+	local flags_color="$c_lblue"
+
+	local branch_color=""
+	if [ $detached = no ]; then
+		branch_color="$ok_color"
+	else
+		branch_color="$bad_color"
+	fi
+	if [ -n "$c" ]; then
+		c="$branch_color$c$c_clear"
+	fi
+	b="$branch_color$b$c_clear"
+
+	if [ -n "$w" ]; then
+		w="$bad_color$w$c_clear"
+	fi
+	if [ -n "$i" ]; then
+		i="$ok_color$i$c_clear"
+	fi
+	if [ -n "$s" ]; then
+		s="$flags_color$s$c_clear"
+	fi
+	if [ -n "$u" ]; then
+		u="$bad_color$u$c_clear"
+	fi
+}
+
+# Helper function to read the first line of a file into a variable.
+# __git_eread requires 2 arguments, the file path and the name of the
+# variable, in that order.
+__git_eread ()
+{
+	test -r "$1" && IFS=$'\r\n' read "$2" <"$1"
+}
+
+# see if a cherry-pick or revert is in progress, if the user has committed a
+# conflict resolution with 'git commit' in the middle of a sequence of picks or
+# reverts then CHERRY_PICK_HEAD/REVERT_HEAD will not exist so we have to read
+# the todo file.
+__git_sequencer_status ()
+{
+	local todo
+	if test -f "$g/CHERRY_PICK_HEAD"
+	then
+		r="|CHERRY-PICKING"
+		return 0;
+	elif test -f "$g/REVERT_HEAD"
+	then
+		r="|REVERTING"
+		return 0;
+	elif __git_eread "$g/sequencer/todo" todo
+	then
+		case "$todo" in
+		p[\ \	]|pick[\ \	]*)
+			r="|CHERRY-PICKING"
+			return 0
+		;;
+		revert[\ \	]*)
+			r="|REVERTING"
+			return 0
+		;;
+		esac
+	fi
+	return 1
+}
+
+# __git_ps1 accepts 0 or 1 arguments (i.e., format string)
+# when called from PS1 using command substitution
+# in this mode it prints text to add to bash PS1 prompt (includes branch name)
+#
+# __git_ps1 requires 2 or 3 arguments when called from PROMPT_COMMAND (pc)
+# in that case it _sets_ PS1. The arguments are parts of a PS1 string.
+# when two arguments are given, the first is prepended and the second appended
+# to the state string when assigned to PS1.
+# The optional third parameter will be used as printf format string to further
+# customize the output of the git-status string.
+# In this mode you can request colored hints using GIT_PS1_SHOWCOLORHINTS=true
+__git_ps1 ()
+{
+	# preserve exit status
+	local exit=$?
+	local pcmode=no
+	local detached=no
+	local ps1pc_start='\u@\h:\w '
+	local ps1pc_end='\$ '
+	local printf_format=' (%s)'
+
+	case "$#" in
+		2|3)	pcmode=yes
+			ps1pc_start="$1"
+			ps1pc_end="$2"
+			printf_format="${3:-$printf_format}"
+			# set PS1 to a plain prompt so that we can
+			# simply return early if the prompt should not
+			# be decorated
+			PS1="$ps1pc_start$ps1pc_end"
+		;;
+		0|1)	printf_format="${1:-$printf_format}"
+		;;
+		*)	return $exit
+		;;
+	esac
+
+	# ps1_expanded:  This variable is set to 'yes' if the shell
+	# subjects the value of PS1 to parameter expansion:
+	#
+	#   * bash does unless the promptvars option is disabled
+	#   * zsh does not unless the PROMPT_SUBST option is set
+	#   * POSIX shells always do
+	#
+	# If the shell would expand the contents of PS1 when drawing
+	# the prompt, a raw ref name must not be included in PS1.
+	# This protects the user from arbitrary code execution via
+	# specially crafted ref names.  For example, a ref named
+	# 'refs/heads/$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)' might cause the
+	# shell to execute 'sudo rm -rf /' when the prompt is drawn.
+	#
+	# Instead, the ref name should be placed in a separate global
+	# variable (in the __git_ps1_* namespace to avoid colliding
+	# with the user's environment) and that variable should be
+	# referenced from PS1.  For example:
+	#
+	#     __git_ps1_foo=$(do_something_to_get_ref_name)
+	#     PS1="...stuff...\${__git_ps1_foo}...stuff..."
+	#
+	# If the shell does not expand the contents of PS1, the raw
+	# ref name must be included in PS1.
+	#
+	# The value of this variable is only relevant when in pcmode.
+	#
+	# Assume that the shell follows the POSIX specification and
+	# expands PS1 unless determined otherwise.  (This is more
+	# likely to be correct if the user has a non-bash, non-zsh
+	# shell and safer than the alternative if the assumption is
+	# incorrect.)
+	#
+	local ps1_expanded=yes
+	[ -z "${ZSH_VERSION-}" ] || [[ -o PROMPT_SUBST ]] || ps1_expanded=no
+	[ -z "${BASH_VERSION-}" ] || shopt -q promptvars || ps1_expanded=no
+
+	local repo_info rev_parse_exit_code
+	repo_info="$(git rev-parse --git-dir --is-inside-git-dir \
+		--is-bare-repository --is-inside-work-tree \
+		--short HEAD 2>/dev/null)"
+	rev_parse_exit_code="$?"
+
+	if [ -z "$repo_info" ]; then
+		return $exit
+	fi
+
+	local short_sha=""
+	if [ "$rev_parse_exit_code" = "0" ]; then
+		short_sha="${repo_info##*$'\n'}"
+		repo_info="${repo_info%$'\n'*}"
+	fi
+	local inside_worktree="${repo_info##*$'\n'}"
+	repo_info="${repo_info%$'\n'*}"
+	local bare_repo="${repo_info##*$'\n'}"
+	repo_info="${repo_info%$'\n'*}"
+	local inside_gitdir="${repo_info##*$'\n'}"
+	local g="${repo_info%$'\n'*}"
+
+	if [ "true" = "$inside_worktree" ] &&
+	   [ -n "${GIT_PS1_HIDE_IF_PWD_IGNORED-}" ] &&
+	   [ "$(git config --bool bash.hideIfPwdIgnored)" != "false" ] &&
+	   git check-ignore -q .
+	then
+		return $exit
+	fi
+
+	local sparse=""
+	if [ -z "${GIT_PS1_COMPRESSSPARSESTATE-}" ] &&
+	   [ -z "${GIT_PS1_OMITSPARSESTATE-}" ] &&
+	   [ "$(git config --bool core.sparseCheckout)" = "true" ]; then
+		sparse="|SPARSE"
+	fi
+
+	local r=""
+	local b=""
+	local step=""
+	local total=""
+	if [ -d "$g/rebase-merge" ]; then
+		__git_eread "$g/rebase-merge/head-name" b
+		__git_eread "$g/rebase-merge/msgnum" step
+		__git_eread "$g/rebase-merge/end" total
+		r="|REBASE"
+	else
+		if [ -d "$g/rebase-apply" ]; then
+			__git_eread "$g/rebase-apply/next" step
+			__git_eread "$g/rebase-apply/last" total
+			if [ -f "$g/rebase-apply/rebasing" ]; then
+				__git_eread "$g/rebase-apply/head-name" b
+				r="|REBASE"
+			elif [ -f "$g/rebase-apply/applying" ]; then
+				r="|AM"
+			else
+				r="|AM/REBASE"
+			fi
+		elif [ -f "$g/MERGE_HEAD" ]; then
+			r="|MERGING"
+		elif __git_sequencer_status; then
+			:
+		elif [ -f "$g/BISECT_LOG" ]; then
+			r="|BISECTING"
+		fi
+
+		if [ -n "$b" ]; then
+			:
+		elif [ -h "$g/HEAD" ]; then
+			# symlink symbolic ref
+			b="$(git symbolic-ref HEAD 2>/dev/null)"
+		else
+			local head=""
+			if ! __git_eread "$g/HEAD" head; then
+				return $exit
+			fi
+			# is it a symbolic ref?
+			b="${head#ref: }"
+			if [ "$head" = "$b" ]; then
+				detached=yes
+				b="$(
+				case "${GIT_PS1_DESCRIBE_STYLE-}" in
+				(contains)
+					git describe --contains HEAD ;;
+				(branch)
+					git describe --contains --all HEAD ;;
+				(tag)
+					git describe --tags HEAD ;;
+				(describe)
+					git describe HEAD ;;
+				(* | default)
+					git describe --tags --exact-match HEAD ;;
+				esac 2>/dev/null)" ||
+
+				b="$short_sha..."
+				b="($b)"
+			fi
+		fi
+	fi
+
+	if [ -n "$step" ] && [ -n "$total" ]; then
+		r="$r $step/$total"
+	fi
+
+	local conflict="" # state indicator for unresolved conflicts
+	if [[ "${GIT_PS1_SHOWCONFLICTSTATE}" == "yes" ]] &&
+	   [[ $(git ls-files --unmerged 2>/dev/null) ]]; then
+		conflict="|CONFLICT"
+	fi
+
+	local w=""
+	local i=""
+	local s=""
+	local u=""
+	local h=""
+	local c=""
+	local p="" # short version of upstream state indicator
+	local upstream="" # verbose version of upstream state indicator
+
+	if [ "true" = "$inside_gitdir" ]; then
+		if [ "true" = "$bare_repo" ]; then
+			c="BARE:"
+		else
+			b="GIT_DIR!"
+		fi
+	elif [ "true" = "$inside_worktree" ]; then
+		if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
+		   [ "$(git config --bool bash.showDirtyState)" != "false" ]
+		then
+			git diff --no-ext-diff --quiet || w="*"
+			git diff --no-ext-diff --cached --quiet || i="+"
+			if [ -z "$short_sha" ] && [ -z "$i" ]; then
+				i="#"
+			fi
+		fi
+		if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ] &&
+		   git rev-parse --verify --quiet refs/stash >/dev/null
+		then
+			s="$"
+		fi
+
+		if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
+		   [ "$(git config --bool bash.showUntrackedFiles)" != "false" ] &&
+		   git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>/dev/null
+		then
+			u="%${ZSH_VERSION+%}"
+		fi
+
+		if [ -n "${GIT_PS1_COMPRESSSPARSESTATE-}" ] &&
+		   [ "$(git config --bool core.sparseCheckout)" = "true" ]; then
+			h="?"
+		fi
+
+		if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
+			__git_ps1_show_upstream
+		fi
+	fi
+
+	local z="${GIT_PS1_STATESEPARATOR-" "}"
+
+	b=${b##refs/heads/}
+	if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
+		__git_ps1_branch_name=$b
+		b="\${__git_ps1_branch_name}"
+	fi
+
+	# NO color option unless in PROMPT_COMMAND mode or it's Zsh
+	if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
+		if [ $pcmode = yes ] || [ -n "${ZSH_VERSION-}" ]; then
+			__git_ps1_colorize_gitstring
+		fi
+	fi
+
+	local f="$h$w$i$s$u$p"
+	local gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}${conflict}"
+
+	if [ $pcmode = yes ]; then
+		if [ "${__git_printf_supports_v-}" != yes ]; then
+			gitstring=$(printf -- "$printf_format" "$gitstring")
+		else
+			printf -v gitstring -- "$printf_format" "$gitstring"
+		fi
+		PS1="$ps1pc_start$gitstring$ps1pc_end"
+	else
+		printf -- "$printf_format" "$gitstring"
+	fi
+
+	return $exit
+}
 ```
