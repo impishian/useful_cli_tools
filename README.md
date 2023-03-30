@@ -1,3 +1,22 @@
+- [1. useful command line tools ( written in rust/go/c )](#1-useful-command-line-tools--written-in-rustgoc-)
+  - [1.1 search, list, view](#11-search-list-view)
+  - [1.2 serve, make, deploy, upload, download](#12-serve-make-deploy-upload-download)
+  - [1.3 convert, calc](#13-convert-calc)
+  - [1.4 test, diag](#14-test-diag)
+  - [1.5 其他](#15-其他)
+- [2. lolcate](#2-lolcate)
+  - [2.1 lc 的 help](#21-lc-的-help)
+  - [2.2 文件类型](#22-文件类型)
+  - [2.3 default数据库](#23-default数据库)
+  - [2.4 其他数据库](#24-其他数据库)
+  - [2.5 日常使用](#25-日常使用)
+  - [2.6 lc\_info](#26-lc_info)
+- [3. generate\_password](#3-generate_password)
+- [4. hex2dec / dec2hex](#4-hex2dec--dec2hex)
+- [5. dot](#5-dot)
+- [6. lilypond](#6-lilypond)
+- [7. e2c / c2e](#7-e2c--c2e)
+
 ## 1. useful command line tools ( written in rust/go/c )
 
 ### 1.1 search, list, view
