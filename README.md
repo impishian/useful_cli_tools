@@ -18,14 +18,13 @@
 - [7. e2c / c2e](#7-e2c--c2e)
 - [8. man](#8-man)
 - [9. bash5 in macOS](#9-bash5-in-macos)
-  - [9.1 install](#91-install)
+  - [9.1 install bash, bash completion](#91-install-bash-bash-completion)
   - [9.2 bash completion](#92-bash-completion)
   - [9.3 bash常用设置](#93-bash常用设置)
     - [9.3.1  ~/.bashrc](#931--bashrc)
     - [9.3.2 ~/.bash\_profile](#932-bash_profile)
     - [9.3.3 ~/.hg-prompt.sh](#933-hg-promptsh)
     - [9.3.4 ~/.git-prompt.sh](#934-git-promptsh)
-    
 
 ## 1. useful command line tools ( written in rust/go/c )
 
@@ -561,7 +560,7 @@ man exa
 
 ## 9. bash5 in macOS
 
-### 9.1 安装 bash 和 bash completion
+### 9.1 install bash, bash completion
 
 (1) install
 
@@ -596,13 +595,15 @@ chsh -s /usr/local/bin/bash # 修改当前用户的默认 shell
 ```
 cp ~/fd-v8.3.2-x86_64-apple-darwin/autocomplete/fd.bash /usr/local/etc/bash_completion.d/
 
+```
+
 (2) 重启 iterm，输入命令，按两下 TAB 键，自动完成
 
+```
 fd - <TAB> <TAB>
+```
 
 (3) 安装命令和配置目录对比
-
-```
 
 | | ubuntu  | MacOS  |
 | ------------ | ------------ | ------------ |
@@ -664,7 +665,7 @@ source ~/.hg-prompt.sh
 
 #### 9.3.2 ~/.bash_profile
 
-(2) 增加 PS1 (带有 __hg_ps1 和 __git_ps1)。用 -K 或 --apple-use-keychain，添加带密码的私钥。就不必每次都输入密码。
+(2) 增加 PS1 (带有 __hg_ps1 和 __git_ps1)。用 -K 或 --apple-use-keychain，添加带密码的私钥，就不必每次都输入密码。
 
 ```
 export PS1='\[\033[0;35m\]\u\[\033[m\]@\[\033[0;32m\]\h \[\033[1;34m\]\w$(__hg_ps1 " (%s)")$(__git_ps1 " (%s)")\[\033[m\]\$ '
