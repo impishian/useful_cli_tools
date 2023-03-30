@@ -299,7 +299,7 @@ node_modules_2
 
 | `db`  | `dirs`  | `ignores` |
 | ------------ | ------------ | ------------ |
-| default |  "~/" | 参加上面文件 |
+| default |  "~/" | 参见上面文件 |
 | not_ian | "/Users" | 在 default的 ignores 基础上，再增加一些，如：<br></br>/Users/ian <br> /Users/Deleted Users/ |
 | usr_opt_private |   "/usr", "/opt", "/private" | .git <br> .hg <br> *~ <br> /usr/11 <br> /usr/X11R6 <br> /private/tmp <br> /private/var |
 | library | "/Library" | 无 |
@@ -594,7 +594,6 @@ chsh -s /usr/local/bin/bash # 修改当前用户的默认 shell
 
 ```
 cp ~/fd-v8.3.2-x86_64-apple-darwin/autocomplete/fd.bash /usr/local/etc/bash_completion.d/
-
 ```
 
 (2) 重启 iterm，输入命令，按两下 TAB 键，自动完成
@@ -665,7 +664,7 @@ source ~/.hg-prompt.sh
 
 #### 9.3.2 ~/.bash_profile
 
-(2) 增加 PS1 (带有 __hg_ps1 和 __git_ps1)。用 -K 或 --apple-use-keychain，添加带密码的私钥，就不必每次都输入密码。
+(1) 增加 PS1 (带有 __hg_ps1 和 __git_ps1)。用 -K 或 --apple-use-keychain，添加带密码的私钥，就不必每次都输入密码。
 
 ```
 export PS1='\[\033[0;35m\]\u\[\033[m\]@\[\033[0;32m\]\h \[\033[1;34m\]\w$(__hg_ps1 " (%s)")$(__git_ps1 " (%s)")\[\033[m\]\$ '
@@ -676,7 +675,7 @@ ssh-add --apple-use-keychain ~/.ssh/id_ed25519_xxxx
 source ~/.bashrc
 ```
 
-(3) 进入hg或git的目录，就会在目录名旁边显示当前分支或版本号。示意如下：
+(2) 进入hg或git的目录，就会在目录名旁边显示当前分支或版本号。示意如下：
 
 ```
 ian@iandeiMac ~/git_test/feather (master)$
