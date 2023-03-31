@@ -302,7 +302,7 @@ node_modules_2
 | default |  "~/" | 参见上面文件 |
 | not_ian | "/Users" | 在 default的 ignores 基础上，再增加一些，如：<br></br>/Users/ian <br> /Users/Deleted Users/ |
 | usr_opt_private |   "/usr", "/opt", "/private" | .git <br> .hg <br> *~ <br> /usr/11 <br> /usr/X11R6 <br> /private/tmp <br> /private/var |
-| library | "/Library" | 无 |
+| library | "/Library" | /Library/InstallerSandboxes/ |
 | application | "/Applications"  | 无 |
 
 ### 2.5 日常使用
