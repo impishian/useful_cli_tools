@@ -611,6 +611,8 @@ fd - <TAB> <TAB>
 
 (4) 常用的一些 bash_completion:
 
+可在相关工具的 github 里，或 google 搜索 xxx completion 得到 xxx 相关的文件
+
 ```
 $ exa --oneline /usr/local/etc/bash_completion.d
 aria2c.bash
