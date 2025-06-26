@@ -861,6 +861,13 @@ man exa
 
 ## 9. bash5 in macOS
 
+注：macOS 默认仍为 Bash 3.2（2007年发布），因 GPLv3 授权问题未更新。
+
+4.x 主要新增特性有“关联数组”、** 全路径递归通配符、read -i 默认输入支持、更强的字符串处理（新增^,~等大小写/替换操作）、改进的 printf/declare -p和coproc支持。
+5.x 新增特性：wait -n 等待任一子进程退出、declear -n 引用变量、declare -x环境变量增强、改善history/readline 行为与兼容性、PS0 Prompt支持、扩展glob操作符准确控制文件匹配。
+
+如果想用 5.x，需要用 homebrew 来安装。  如果不想用 homebrew，就保持用默认的 3.2 版本。
+
 ### 9.1 install bash, bash completion
 
 (1) install
