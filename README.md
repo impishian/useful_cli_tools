@@ -1,3 +1,36 @@
+- [1. useful command line tools ( written in rust/go/c )](#1-useful-command-line-tools--written-in-rustgoc-)
+  - [1.1 search, list, view](#11-search-list-view)
+  - [1.2 serve, make, deploy, upload, download](#12-serve-make-deploy-upload-download)
+  - [1.3 edit, convert, calc](#13-edit-convert-calc)
+  - [1.4 test, diag](#14-test-diag)
+  - [1.5 其他](#15-其他)
+  - [1.6 部分工具的最新下载链接地址](#16-部分工具的最新下载链接地址)
+- [2. lolcate](#2-lolcate)
+  - [2.1 lc 的 help](#21-lc-的-help)
+  - [2.2 文件类型](#22-文件类型)
+  - [2.3 default数据库](#23-default数据库)
+  - [2.4 其他数据库](#24-其他数据库)
+  - [2.5 日常使用](#25-日常使用)
+  - [2.6 lc\_info](#26-lc_info)
+  - [2.7 lc\_update](#27-lc_update)
+- [3. generate\_password](#3-generate_password)
+- [4. hex2dec / dec2hex](#4-hex2dec--dec2hex)
+- [5. dot](#5-dot)
+- [6. lilypond](#6-lilypond)
+- [7. e2c / c2e](#7-e2c--c2e)
+- [8. man](#8-man)
+- [9. bash5 in macOS](#9-bash5-in-macos)
+  - [9.1 install bash, bash completion](#91-install-bash-bash-completion)
+  - [9.2 bash completion](#92-bash-completion)
+  - [9.3 bash常用设置](#93-bash常用设置)
+    - [9.3.1  ~/.bashrc](#931--bashrc)
+    - [9.3.2 ~/.bash\_profile](#932-bash_profile)
+    - [9.3.3 ~/.hg-prompt.sh](#933-hg-promptsh)
+    - [9.3.4 ~/.git-prompt.sh](#934-git-promptsh)
+- [10. 交叉编译](#10-交叉编译)
+  - [10.1 lolcate](#101-lolcate)
+  - [10.2 czkawka_cli](#102-czkawka_cli)
+
 ## 1. useful command line tools ( written in rust/go/c )
 
 ### 1.1 search, list, view
@@ -153,8 +186,9 @@ libtool   lzip    nettle    openssl@3 pcre    readline
 
 ** 注意：homebrew 增加了太多动态库的依赖，建议尽量不用 **
 
-### 1.6 以上部分标红的工具的最新下载链接地址（2025-06-01）
+### 1.6 部分工具的最新下载链接地址
 
+（2025-06-01）
 ```
 ################   1. macos aarch64  ################
 # 无 lolcate for macos aarch64
@@ -1683,7 +1717,9 @@ __git_ps1 ()
 }
 ```
 
-## 10. 在 x86 ubuntu22 下交叉编译得到 arm64 (也称为 aarch64) Linux 版本
+## 10. 交叉编译
+
+在 x86 ubuntu22 下交叉编译得到 arm64 (也称为 aarch64) Linux 版本
 
 ### 10.1 lolcate
 
