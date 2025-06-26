@@ -1,31 +1,3 @@
-- [1. useful command line tools ( written in rust/go/c )](#1-useful-command-line-tools--written-in-rustgoc-)
-  - [1.1 search, list, view](#11-search-list-view)
-  - [1.2 serve, make, deploy, upload, download](#12-serve-make-deploy-upload-download)
-  - [1.3 convert, calc](#13-convert-calc)
-  - [1.4 test, diag](#14-test-diag)
-  - [1.5 其他](#15-其他)
-- [2. lolcate](#2-lolcate)
-  - [2.1 lc 的 help](#21-lc-的-help)
-  - [2.2 文件类型](#22-文件类型)
-  - [2.3 default数据库](#23-default数据库)
-  - [2.4 其他数据库](#24-其他数据库)
-  - [2.5 日常使用](#25-日常使用)
-  - [2.6 lc\_info](#26-lc_info)
-- [3. generate\_password](#3-generate_password)
-- [4. hex2dec / dec2hex](#4-hex2dec--dec2hex)
-- [5. dot](#5-dot)
-- [6. lilypond](#6-lilypond)
-- [7. e2c / c2e](#7-e2c--c2e)
-- [8. man](#8-man)
-- [9. bash5 in macOS](#9-bash5-in-macos)
-  - [9.1 install bash, bash completion](#91-install-bash-bash-completion)
-  - [9.2 bash completion](#92-bash-completion)
-  - [9.3 bash常用设置](#93-bash常用设置)
-    - [9.3.1  ~/.bashrc](#931--bashrc)
-    - [9.3.2 ~/.bash\_profile](#932-bash_profile)
-    - [9.3.3 ~/.hg-prompt.sh](#933-hg-promptsh)
-    - [9.3.4 ~/.git-prompt.sh](#934-git-promptsh)
-
 ## 1. useful command line tools ( written in rust/go/c )
 
 ### 1.1 search, list, view
@@ -34,22 +6,27 @@
 | ------------ | ------------ | ------------ |
 | `lolcate` |  https://github.com/ngirard/lolcate-rs | A comically fast way of indexing and querying your filesystem. Replaces locate / mlocate / updatedb. Written in Rust. 推荐 `ln -s ... lc` 。下个小节，是 lc 的配置和使用 |
 | `joshuto` | https://github.com/kamiyaa/joshuto | ranger-like terminal file manager written in Rust 与 hunter 类似，功能和定制性更优、可参考 github 上的 toml 配置，而 keymap.toml , mimetype.toml 可适当修改。推荐 `ln -s ... jst` |
+| `zellij` | https://github.com/zellij-org/zellij | A terminal workspace with batteries included |
 | hunter | https://github.com/rabite0/hunter | The fastest file manager in the galaxy! |
+| `yazi`| https://github.com/sxyazi/yazi | Blazing fast terminal file manager written in Rust, based on async I/O |
 | `fd` | https://github.com/sharkdp/fd | A simple, fast and user-friendly alternative to 'find' |
 | `fzf` | https://github.com/junegunn/fzf |A command-line fuzzy finder |
 | `exa` | https://github.com/ogham/exa | A modern replacement for ‘ls’. |
+| `eza`| https://github.com/eza-community/eza  | A modern, maintained replacement for ls |
 | `zoxide` | https://github.com/ajeetdsouza/zoxide | A smarter cd command. Supports all major shells. 增加一行到 .bashrc，以后便可 z 或 zi 替代长长的 cd 命令行 |
 | `glow` | https://github.com/charmbracelet/glow   | Render markdown on the CLI, with pizzazz!  (类似的有: mdcat)  |
+| `tlrc` (rust) | https://github.com/tldr-pages/tlrc | Official tldr client written in Rust  https://lib.rs/crates/tlrc|
 | `tldr` (rust) | https://github.com/dbrgn/tealdeer | A very fast implementation of tldr in Rust. 在 MacOS下不便编译C版本的，可用 rust 版本的。 |
 | tldr (in c) | https://github.com/tldr-pages/tldr-c-client | C command-line client for tldr pages. 代替 man 常用功能，省去大略查看 man 的时间. 相关页面: https://tldr.sh/ |
 | tree | https://github.com/Old-Man-Programmer/tree.git |Tree for Unix/LInux|
 | `ncdu` | https://dev.yorhel.nl/ncdu | v1.17, a disk usage analyzer with an ncurses interface |
-| `czkawka` | https://github.com/qarmin/czkawka |find duplicates, empty folders, similar images etc. 超快。(Ubuntu：可下载最新5.0.2；MacOS 13.1 可下载5.1.0；CentOS7.9需rpm安装glibc2.28再下载3.31版本)|
+| `czkawka` | https://github.com/qarmin/czkawka |find duplicates, empty folders, similar images etc. 超快。(Ubuntu：可下载最新5.0.2；MacOS 13.1 可下载5.1.0；CentOS7.9需rpm安装glibc2.28再下载3.31版本)。 |
 | `ripgrep` | https://github.com/BurntSushi/ripgrep | `rg` (grep替代). ripgrep recursively searches directories for a regex pattern while respecting your gitignore |
 | ugrep | https://github.com/Genivia/ugrep | NEW ugrep v3.8: ultra fast grep with interactive TUI, fuzzy search, boolean queries, hexdumps and more: search file systems, source code, text, binary files, archives (cpio/tar/pax/zip), compressed files (gz/Z/bz2/lzma/xz/lz4/zstd), documents etc. A faster, user-friendly and compatible grep replacement.( github.com/genivia/ugrep/wiki ) |
 | `bat` | https://github.com/sharkdp/bat/ | A cat(1) clone with wings. |
 | `difft` | https://github.com/Wilfred/difftastic/ | a structural diff that understands syntax|
 | delta | https://github.com/dandavison/delta | A syntax-highlighting pager for git, diff, and grep output |
+| `verco` | https://github.com/vamolessa/verco | A simple Git/Mercurial/PlasticSCM tui client based on keyboard shortcuts https://vamolessa.github.io/verco/ |
 | `gitui` | https://github.com/extrawurst/gitui | Blazing 💥 fast terminal-ui for git written in rust   |
 | `ydict` | https://github.com/TimothyYe/ydict | Yet another command-line youdao dictionary for geeks! 推荐 `ln -s ... yd` |
 | `manssh` | https://github.com/xwjdsh/manssh | Manage your ssh alias configs easily. |
@@ -57,6 +34,7 @@
 | hex | https://github.com/sitkevij/hex  | Futuristic take on hexdump, made in Rust |
 | `viu` | https://github.com/atanunq/viu | Terminal image viewer with native support for iTerm and Kitty |
 | ag | https://github.com/ggreer/the_silver_searcher | A code-searching tool similar to ack, but faster. ( https://geoff.greer.fm/ag/ ) |
+| `skim` | https://github.com/skim-rs/skim |Fuzzy Finder in rust!  (fzf替代品) |
 
 ### 1.2 serve, make, deploy, upload, download
 
@@ -64,15 +42,20 @@
 | ------------ | ------------ | ------------ |
 | `fnm` | https://github.com/Schniz/fnm |nvm替代|
 |frum | https://github.com/TaKO8Ki/frum | rvm替代。A little bit fast and modern Ruby version manager written in Rust|
-| `miniserve` | https://github.com/svenstaro/miniserve | For when you really just want to serve some files over HTTP right now! (release下的MacOS版本，运行时报“段故障”，需自行编译)  ，常用参数：miniserve -v -u -W -D -g -z .  可上传、下载，大文件性能也不错。 Android/iOS/Mac/Windows 之间，局域网内互传文件之佳选|
+| `miniserve` | https://github.com/svenstaro/miniserve | For when you really just want to serve some files over HTTP right now! ( Android/iOS/Mac/Windows 之间，局域网内互传文件之佳选。 release下的MacOS版本，运行时报“段故障”，需自行编译)  ，常用参数：miniserve -v -u -W -D -g -z .  可上传、下载，传大文件性能也还行。|
+| `filebrowser` | https://github.com/filebrowser/filebrowser | Web File Browser https://filebrowser.org (局域网内互传文件、目录之佳选。 与 miniserve 相比：1.也是单可执行文件，go语言实现，文件大一些，16MB，而 miniserve 才 3.8MB。2. 除可上传文件，也可上传目录。3.若 miniserve 遇到上传速度不佳，可试试它。4.会在当前目录下生成 filebrowser.db 保存配置，建议在 .bashrc 中 export FB_DATABASE=/Users/ian/.filebrowser.db ，就不会每个目录下都生成 db。5. 缺省管理员: admin/admin)|
 | `facil` | https://github.com/boazsegev/facil.io | Your high performance web application C framework (1.使用 scripts/new/app 这个 shell 脚本，新建一个工程，2.进入工程目录，make 编译得到 fioapp改名为 facil 即得到最轻量级的一个 http server。 3.比如：nohup facil -p 3333 -w 1 -t 1 -www /Users/ian/html-book-20211231/reference/ 2>&1 > /dev/null &)  和 nohup facil -p 4444 -w 1 -t 1 -www /Users/ian/.rustup/toolchains/stable-x86_64-apple-darwin/share/doc/rust/html 2>&1 > /dev/null & |
 | simple-http-server| https://github.com/TheWaWaR/simple-http-server  | 支持上传的 Simple http server in Rust (Windows/Mac/Linux), 可用于 android 上传文件到 iMac |
 | uploadserver | https://github.com/akovacs/uploadserver |Simple Rust file server which lets you upload, share, and download files from a web browser.  |
-| aria2 | https://github.com/aria2/aria2 | aria2 is a lightweight multi-protocol & multi-source, cross platform download utility operated in command-line. It supports HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink. ( aria2.github.io/ ) |
-| wget2 | https://github.com/rockdaboot/wget2.git | The successor of GNU Wget |
+| aria2 | https://github.com/aria2/aria2 | aria2 is a lightweight multi-protocol & multi-source, cross platform download utility operated in command-line. It supports HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink. ( aria2.github.io/ )  编译得到 aria2c，运行，常驻|
+| AriaNg| https://github.com/mayswind/AriaNg | AriaNg, a modern web frontend making aria2 easier to use.下载单文件All-in-One，解压得到 aria.html。写一个shell文件 aria: open /usr/local/bin/aria.html |
+| wget2 | https://github.com/rockdaboot/wget2.git | The successor of GNU Wget。因为需依赖 openssl 库以及 GNU 的工具链，MacOS 下编译纯静态binary的 wget/wget2 比较麻烦。建议用 pget 或 aria2  |
+| `pget` | https://github.com/Code-Hex/pget | The fastest, resumable file download client |
 | croc | https://github.com/schollz/croc | Easily and securely send things from one computer to another ( https://schollz.com/software/croc6) |
 | you-get | https://github.com/soimort/you-get | Dumb downloader that scrapes the web, 可下载大量视频网站 (https://you-get.org/ ) |
+| `just` | https://github.com/casey/just | Just a command runner . Make替代 |
 | `task` | https://github.com/go-task/task | A task runner / simpler Make alternative written in Go (https://taskfile.dev) |
+| `watchexec` | https://github.com/watchexec/watchexec | Executes commands in response to file modifications |
 | sup | https://github.com/pressly/sup | Super simple deployment tool - think of it like 'make' for a network of servers |
 | xmake, xrepo | https://github.com/xmake-io/xmake.git | A cross-platform build utility based on Lua |
 | ssh-copy-id-for-OSX | https://github.com/beautifulcode/ssh-copy-id-for-OSX.git | Quick Mac OSX port of the useful unix utility ssh-copy-id |
@@ -82,12 +65,32 @@
 | httpie || python |
 | curlie || go |
 | axel || c, 依赖太多，OS下不好编译 |
+| 1History | https://github.com/1History/1History | All your history in one file  |
+| mkcert | https://github.com/FiloSottile/mkcert | 简单易用，支持本地 CA 信任和自动证书生成,  快速用于生成一个测试域名的证书（仅限开发环境，不要用于生产）， 用于测试需要 HTTPS 的 Web 应用。比 openssl 命令行操作简单|
+|makefile2graph|https://github.com/lindenb/makefile2graph | Creates a graph of dependencies from GNU-Make; Output is a graphiz-dot file or a Gexf-XML file.|
+|lima |https://github.com/lima-vm/lima| Linux virtual machines, with a focus on running containers |
+|colima | https://github.com/abiosoft/colima | Container runtimes on macOS (and Linux) with minimal setup |
+|ollama|https://github.com/ollama/ollama | Get up and running with Llama 3.3, Mistral, Gemma 2, and other large language models.|
+|regclient (regbot/regctl/regsync) | https://github.com/regclient/regclient |Docker and OCI Registry Client in Go and tooling using those libraries. |
+|act|https://github.com/nektos/act|Run your GitHub Actions locally|
+|yt-dlp|https://github.com/yt-dlp/yt-dlp|A feature-rich command-line audio/video downloader |
+|ffmpeg/ffprobe/ffplay| https://ffmpeg.martin-riedl.de/ | macOS arm版ffmpeg 等工具的static binary
+|mise|https://github.com/jdx/mise| dev tools, env vars, task runner |
+|termscp | https://github.com/veeso/termscp| A feature rich terminal UI file transfer and explorer with support for SCP/SFTP/FTP/S3/SMB |
+|fossil | https://fossil-scm.org/ | 类似 hg/git，但是更小。单文件。|
+|mosdns | https://github.com/IrineSistiana/mosdns| 一个 DNS 转发器
+|easymosdns| https://github.com/pmkol/easymosdns | An easy script for the Mosdns basic functions, enabling you to set up a pollution-free DNS server that supports ECS in just a few minutes.|
+|hugo|https://github.com/gohugoio/hugo| The world’s fastest framework for building websites. |
+|wtf (wtfutil)|https://github.com/wtfutil/wtf| The personal information dashboard for your terminal |
+|rclone | https://github.com/rclone/rclone |  rsync for cloud storage |
+|7zz |https://www.7-zip.org/| 压缩、解压缩|
 
-### 1.3 convert, calc
+### 1.3 edit, convert, calc
 
 |   | github  | 说明  |
 | ------------ | ------------ | ------------ |
-| `network-calc`|https://github.com/allisonmachado/network-calc | A subnet mask and network calculator|
+| `hx`|https://github.com/helix-editor/helix | A post-modern modal text editor. (vim最佳替代品)，配置使用可参见: [rust实现的一些编辑器](https://wiki.xbtkan.com/docs/a1/a1-1eko644ksr52o "rust实现的一些编辑器") |
+| `network-calc`|https://github.com/allisonmachado/network-calc | A subnet mask and network calculator. (gcc -static network-calc.c -lm -o network-calc) |
 | `sd` | https://github.com/chmln/sd | Intuitive find & replace CLI (sed alternative) 替换字符串，更快。 |
 | `tokei` | https://github.com/XAMPPRocky/tokei | Count your code, quickly. |
 | cloc | https://github.com/AlDanial/cloc.git |perl script. cloc counts blank lines, comment lines, and physical lines of source code in many programming languages. |
@@ -99,15 +102,18 @@
 | w3m | https://github.com/tats/w3m.git | Debian's w3m: WWW browsable pager，可做到类似Sublime Text的 HTML Prettify的格式化 |
 | html tidy | https://www.html-tidy.org/ | https://blog.longwin.com.tw/2010/09/html-tidy-formatter-2010/ , 类似Sublime Text的 HTML Prettify|
 | rename | https://github.com/ap/rename.git | perl script. Rename multiple files |
-| jade | https://github.com/Joker/jade | Jade.go - pug template engine for Go (golang) , https://www.cnblogs.com/xiaohuochai/p/7222227.html|
+| jade | https://github.com/Joker/jade | Jade.go - pug template engine for Go (golang) , https://www.cnblogs.com/xiaohuochai/p/7222227.html |
 | q | https://harelba.github.io/q |Run SQL directly on delimited files and multi-file sqlite databases |
+| ouch | https://github.com/ouch-org/ouch | Painless compression and decompression for your terminal crates.io/crates/ouch
+| dtool | https://github.com/guoxbin/dtool | A command-line tool collection to assist development . 进制转换，时间和timestamp转换、Hash、AES、Hex<->String、URL encode/decode、HTML entidy encode/decode、Case转换、UTF-8/Unicode字符转换|
+|pandoc| https://pandoc.org/ | a universal document converter |
 
 ### 1.4 test, diag
 
 |  | github  | 说明  |
 | ------------ | ------------ | ------------ |
 | `nali` | https://github.com/zu1k/nali | 一个查询IP地理信息和CDN服务提供商的离线终端工具.An offline tool for querying IP geographic information and CDN provider. |
-| `bandwhich` | https://github.com/imsnif/bandwhich | Terminal bandwidth utilization tool |
+| `bandwhich` | https://github.com/imsnif/bandwhich | Terminal bandwidth utilization tool 注意：在mac下需 sudo bandwhich 这样运行|
 | `websocat` | https://github.com/vi/websocat | Command-line client for WebSockets, like netcat (or curl) for ws:// with advanced socat-like functions |
 | `iperf3` | https://github.com/esnet/iperf | iperf3: A TCP, UDP, and SCTP network bandwidth measurement tool |
 | q | https://github.com/natesales/q |A tiny command line DNS client with support for UDP, TCP, DoT, DoH, DoQ and ODoH.|
@@ -117,16 +123,22 @@
 | RustScan | https://github.com/RustScan/RustScan | The Modern Port Scanner |
 | wtf | https://github.com/wtfutil/wtf | The personal information dashboard for your terminal (https://wtfutil.com ) |
 | ctop | https://github.com/bcicen/ctop | Top-like interface for container metrics (https://ctop.sh) |
+| `bottom` | https://github.com/ClementTsang/bottom | Yet another cross-platform graphical process/system monitor. |
 | `zenith` | https://github.com/bvaisvil/zenith  | Zenith - sort of like top or htop but with zoom-able charts, CPU, GPU, network, and disk usage |
 | wrk | https://github.com/wg/wrk.git | Modern HTTP benchmarking tool ，可用 lua |
 | siege | https://github.com/JoeDog/siege | Siege is an http load tester and benchmarking utility |
+| `trippy` | https://github.com/fujiapple852/trippy | A network diagnostic tool https://trippy.cli.rs |
 | mtr / mtr-packet| https://github.com/traviscross/mtr | Official repository for mtr, a network diagnostic tool |
 | mylg | https://github.com/mehrdadrad/mylg | Network Diagnostic Tool |
 | mmock | https://github.com/jmartin82/mmock  |  Mmock is an HTTP mocking application for testing and fast prototyping |
+| dog |https://github.com/ogham/dog | dig替代品|
+| sccache | https://github.com/mozilla/sccache | Sccache is a ccache-like tool. It is used as a compiler wrapper and avoids compilation when possible. Sccache has the capability to utilize caching in remote storage environments, including various cloud storage options, or alternatively, in local storage. |
 
 ### 1.5 其他
 
 k9s, kdash, termscp, oxker, trippy 等基于tui-rs的一些应用。
+
+更多 rust 实现的命令行工具，可查阅： https://lib.rs/command-line-utilities
 
 MacOS下编译以上C工程代码，需依赖的一些软件示意如下（不完全列表）：
 
@@ -139,8 +151,144 @@ automake  bash    ca-certificates ctags   gmp   guile   libffi    libnghttp2
 libtool   lzip    nettle    openssl@3 pcre    readline
 ```
 
-更多 rust 实现的命令行工具，可查阅： https://lib.rs/command-line-utilities
+** 注意：homebrew 增加了太多动态库的依赖，建议尽量不用 **
 
+### 1.6 以上部分标红的工具的最新下载链接地址（2025-06-01）
+
+```
+################   1. macos aarch64  ################
+# 无 lolcate for macos aarch64
+https://github.com/kamiyaa/joshuto/releases/download/v0.9.9/joshuto-v0.9.9-aarch64-apple-darwin.tar.gz
+https://github.com/zellij-org/zellij/releases/download/v0.42.2/zellij-aarch64-apple-darwin.tar.gz
+https://github.com/sxyazi/yazi/releases/download/v25.5.31/yazi-aarch64-apple-darwin.zip
+https://github.com/sharkdp/fd/releases/download/v10.2.0/fd-v10.2.0-aarch64-apple-darwin.tar.gz
+https://github.com/junegunn/fzf/releases/download/v0.62.0/fzf-0.62.0-darwin_arm64.tar.gz
+# 无 eza for macos aarch64
+https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.8/zoxide-0.9.8-aarch64-apple-darwin.tar.gz
+https://github.com/charmbracelet/glow/releases/download/v2.1.1/glow_2.1.1_Darwin_arm64.tar.gz
+https://github.com/tealdeer-rs/tealdeer/releases/download/v1.7.2/tealdeer-macos-aarch64
+# 无 ncdu static binary for macos aarch64
+https://github.com/qarmin/czkawka/releases/download/9.0.0/mac_czkawka_cli_arm
+https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-aarch64-apple-darwin.tar.gz
+https://github.com/sharkdp/bat/releases/download/v0.25.0/bat-v0.25.0-aarch64-apple-darwin.tar.gz
+https://github.com/Wilfred/difftastic/releases/download/0.63.0/difft-aarch64-apple-darwin.tar.gz
+https://github.com/gitui-org/gitui/releases/download/v0.27.0/gitui-mac.tar.gz
+https://github.com/TimothyYe/ydict/releases/download/v2.2.2/ydict_2.2.2_darwin_arm64.tar.gz
+https://github.com/xwjdsh/manssh/releases/download/v0.5.3/manssh_0.5.3_Darwin_arm64.tar.gz
+# 无 viu for macos aarch64
+https://github.com/skim-rs/skim/releases/download/v0.18.0/skim-aarch64-apple-darwin.tgz
+https://github.com/Schniz/fnm/releases/download/v1.38.1/fnm-macos.zip
+https://github.com/svenstaro/miniserve/releases/download/v0.29.0/miniserve-0.29.0-aarch64-apple-darwin
+https://github.com/Code-Hex/pget/releases/download/v0.2.1/pget_.0.2.1_macOS_arm64.tar.gz
+https://github.com/helix-editor/helix/releases/download/25.01.1/helix-25.01.1-aarch64-macos.tar.xz
+https://github.com/chmln/sd/releases/download/v1.0.0/sd-v1.0.0-aarch64-apple-darwin.tar.gz
+https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-macos-arm64
+https://github.com/zu1k/nali/releases/download/v0.8.1/nali-darwin-arm64-v0.8.1.gz
+https://github.com/imsnif/bandwhich/releases/download/v0.23.1/bandwhich-v0.23.1-aarch64-apple-darwin.tar.gz
+https://github.com/ClementTsang/bottom/releases/download/0.10.2/bottom_aarch64-apple-darwin.tar.gz
+https://github.com/bvaisvil/zenith/releases/download/0.14.1/zenith.aarch64-apple-darwin.tgz
+https://github.com/fujiapple852/trippy/releases/download/0.13.0/trippy-0.13.0-aarch64-apple-darwin.tar.gz
+
+################   2. macos x86_64  ################
+# 无 lolcate for macos x86_64
+https://github.com/kamiyaa/joshuto/releases/download/v0.9.9/joshuto-v0.9.9-x86_64-apple-darwin.tar.gz
+https://github.com/zellij-org/zellij/releases/download/v0.42.2/zellij-x86_64-apple-darwin.tar.gz
+https://github.com/sxyazi/yazi/releases/download/v25.5.31/yazi-x86_64-apple-darwin.zip
+https://github.com/sharkdp/fd/releases/download/v10.2.0/fd-v10.2.0-x86_64-apple-darwin.tar.gz
+https://github.com/junegunn/fzf/releases/download/v0.62.0/fzf-0.62.0-darwin_amd64.tar.gz
+# 无 eza for macos x86_64
+https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.8/zoxide-0.9.8-x86_64-apple-darwin.tar.gz
+https://github.com/charmbracelet/glow/releases/download/v2.1.1/glow_2.1.1_Darwin_x86_64.tar.gz
+https://github.com/tealdeer-rs/tealdeer/releases/download/v1.7.2/tealdeer-macos-x86_64
+# 无 ncdu static binary for macos x86_64
+https://github.com/qarmin/czkawka/releases/download/9.0.0/mac_czkawka_cli
+https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-x86_64-apple-darwin.tar.gz
+https://github.com/sharkdp/bat/releases/download/v0.25.0/bat-v0.25.0-x86_64-apple-darwin.tar.gz
+https://github.com/Wilfred/difftastic/releases/download/0.63.0/difft-x86_64-apple-darwin.tar.gz
+https://github.com/gitui-org/gitui/releases/download/v0.27.0/gitui-mac-x86.tar.gz
+https://github.com/TimothyYe/ydict/releases/download/v2.2.2/ydict_2.2.2_darwin_amd64.tar.gz
+https://github.com/xwjdsh/manssh/releases/download/v0.5.3/manssh_0.5.3_Darwin_x86_64.tar.gz
+https://github.com/atanunq/viu/releases/download/v1.5.1/viu-x86_64-apple-darwin
+https://github.com/skim-rs/skim/releases/download/v0.18.0/skim-x86_64-apple-darwin.tgz
+https://github.com/Schniz/fnm/releases/download/v1.38.1/fnm-macos.zip
+https://github.com/svenstaro/miniserve/releases/download/v0.29.0/miniserve-0.29.0-x86_64-apple-darwin
+https://github.com/Code-Hex/pget/releases/download/v0.2.1/pget_.0.2.1_macOS_x86_64.tar.gz
+https://github.com/helix-editor/helix/releases/download/25.01.1/helix-25.01.1-x86_64-macos.tar.xz
+https://github.com/chmln/sd/releases/download/v1.0.0/sd-v1.0.0-x86_64-apple-darwin.tar.gz
+https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-macos-amd64
+https://github.com/zu1k/nali/releases/download/v0.8.1/nali-darwin-amd64-v0.8.1.gz
+https://github.com/imsnif/bandwhich/releases/download/v0.23.1/bandwhich-v0.23.1-x86_64-apple-darwin.tar.gz
+https://github.com/ClementTsang/bottom/releases/download/0.10.2/bottom_x86_64-apple-darwin.tar.gz
+https://github.com/bvaisvil/zenith/releases/download/0.14.1/zenith.x86_64-apple-darwin.tgz
+https://github.com/fujiapple852/trippy/releases/download/0.13.0/trippy-0.13.0-x86_64-apple-darwin.tar.gz
+
+################   3. linux aarch64  ################
+# 无 lolcate for linux aarch64
+https://github.com/kamiyaa/joshuto/releases/download/v0.9.9/joshuto-v0.9.9-aarch64-unknown-linux-musl.tar.gz
+https://github.com/zellij-org/zellij/releases/download/v0.42.2/zellij-aarch64-unknown-linux-musl.tar.gz
+https://github.com/sxyazi/yazi/releases/download/v25.5.31/yazi-aarch64-unknown-linux-musl.zip
+https://github.com/sharkdp/fd/releases/download/v10.2.0/fd-v10.2.0-aarch64-unknown-linux-musl.tar.gz
+https://github.com/junegunn/fzf/releases/download/v0.62.0/fzf-0.62.0-linux_arm64.tar.gz
+https://github.com/eza-community/eza/releases/download/v0.21.4/eza_aarch64-unknown-linux-gnu.tar.gz  # 无musl版
+https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.8/zoxide-0.9.8-aarch64-unknown-linux-musl.tar.gz
+https://github.com/charmbracelet/glow/releases/download/v2.1.1/glow_2.1.1_arm64.deb
+https://github.com/tealdeer-rs/tealdeer/releases/download/v1.7.2/tealdeer-linux-i686-musl
+https://dev.yorhel.nl/download/ncdu-2.8.1-linux-aarch64.tar.gz
+https://github.com/qarmin/czkawka/releases/download/9.0.0/linux_czkawka_cli_arm
+https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-aarch64-unknown-linux-gnu.tar.gz
+https://github.com/sharkdp/bat/releases/download/v0.25.0/bat-musl_0.25.0_arm64.deb
+https://github.com/Wilfred/difftastic/releases/download/0.63.0/difft-aarch64-unknown-linux-gnu.tar.gz
+https://github.com/gitui-org/gitui/releases/download/v0.27.0/gitui-linux-aarch64.tar.gz
+https://github.com/TimothyYe/ydict/releases/download/v2.2.2/ydict_2.2.2_linux_arm64.tar.gz
+https://github.com/xwjdsh/manssh/releases/download/v0.5.3/manssh_0.5.3_Linux_arm64.tar.gz
+https://github.com/atanunq/viu/releases/download/v1.5.1/viu-aarch64-unknown-linux-musl
+https://github.com/skim-rs/skim/releases/download/v0.18.0/skim-aarch64-unknown-linux-musl.tgz
+https://github.com/Schniz/fnm/releases/download/v1.38.1/fnm-arm64.zip
+https://github.com/svenstaro/miniserve/releases/download/v0.29.0/miniserve-0.29.0-aarch64-unknown-linux-musl
+https://github.com/Code-Hex/pget/releases/download/v0.2.1/pget_0.2.1_linux_arm64.deb
+https://github.com/helix-editor/helix/releases/download/25.01.1/helix-25.01.1-aarch64-linux.tar.xz
+https://github.com/chmln/sd/releases/download/v1.0.0/sd-v1.0.0-aarch64-unknown-linux-musl.tar.gz
+https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-arm64
+https://github.com/zu1k/nali/releases/download/v0.8.1/nali-linux-armv8-v0.8.1.gz
+https://github.com/imsnif/bandwhich/releases/download/v0.23.1/bandwhich-v0.23.1-aarch64-unknown-linux-musl.tar.gz
+https://github.com/ClementTsang/bottom/releases/download/0.10.2/bottom_aarch64-unknown-linux-musl.tar.gz
+https://github.com/bvaisvil/zenith/releases/download/0.14.1/zenith.aarch64-unknown-linux-musl.tgz
+https://github.com/fujiapple852/trippy/releases/download/0.13.0/trippy-0.13.0-aarch64-unknown-linux-musl.tar.gz
+
+################   4. linux x86_64  ################
+# https://github.com/ngirard/lolcate-rs/releases/download/v0.10.0/lolcate--x86_64-unknown-linux-musl.tar.gz
+https://github.com/kamiyaa/joshuto/releases/download/v0.9.9/joshuto-v0.9.9-x86_64-unknown-linux-musl.tar.gz
+https://github.com/zellij-org/zellij/releases/download/v0.42.2/zellij-x86_64-unknown-linux-musl.tar.gz
+https://github.com/sxyazi/yazi/releases/download/v25.5.31/yazi-x86_64-unknown-linux-musl.zip
+https://github.com/sharkdp/fd/releases/download/v10.2.0/fd-v10.2.0-x86_64-unknown-linux-musl.tar.gz
+https://github.com/junegunn/fzf/releases/download/v0.62.0/fzf-0.62.0-linux_amd64.tar.gz
+https://github.com/eza-community/eza/releases/download/v0.21.4/eza_x86_64-unknown-linux-musl.tar.gz
+https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.8/zoxide-0.9.8-x86_64-unknown-linux-musl.tar.gz
+https://github.com/charmbracelet/glow/releases/download/v2.1.1/glow_2.1.1_amd64.deb
+https://github.com/tealdeer-rs/tealdeer/releases/download/v1.7.2/tealdeer-linux-x86_64-musl
+https://dev.yorhel.nl/download/ncdu-2.8.1-linux-x86_64.tar.gz
+https://dev.yorhel.nl/download/ncdu-2.8.1-linux-aarch64.tar.gz
+https://github.com/qarmin/czkawka/releases/download/9.0.0/linux_czkawka_cli_no_glibc
+https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-x86_64-unknown-linux-musl.tar.gz
+https://github.com/sharkdp/bat/releases/download/v0.25.0/bat-musl_0.25.0_musl-linux-amd64.deb
+https://github.com/Wilfred/difftastic/releases/download/0.63.0/difft-x86_64-unknown-linux-musl.tar.gz
+https://github.com/gitui-org/gitui/releases/download/v0.27.0/gitui-linux-x86_64.tar.gz
+https://github.com/TimothyYe/ydict/releases/download/v2.2.2/ydict_2.2.2_linux_amd64.tar.gz
+https://github.com/xwjdsh/manssh/releases/download/v0.5.3/manssh_0.5.3_Linux_x86_64.tar.gz
+https://github.com/atanunq/viu/releases/download/v1.5.1/viu-x86_64-unknown-linux-musl
+https://github.com/skim-rs/skim/releases/download/v0.18.0/skim-x86_64-unknown-linux-musl.tgz
+https://github.com/Schniz/fnm/releases/download/v1.38.1/fnm-linux.zip
+https://github.com/svenstaro/miniserve/releases/download/v0.29.0/miniserve-0.29.0-x86_64-unknown-linux-musl
+https://github.com/Code-Hex/pget/releases/download/v0.2.1/pget_0.2.1_linux_amd64.deb
+https://github.com/helix-editor/helix/releases/download/25.01.1/helix-25.01.1-x86_64-linux.tar.xz
+https://github.com/chmln/sd/releases/download/v1.0.0/sd-v1.0.0-x86_64-unknown-linux-musl.tar.gz
+https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64
+https://github.com/zu1k/nali/releases/download/v0.8.1/nali-linux-amdv8-v0.8.1.gz
+https://github.com/imsnif/bandwhich/releases/download/v0.23.1/bandwhich-v0.23.1-x86_64-unknown-linux-musl.tar.gz
+https://github.com/ClementTsang/bottom/releases/download/0.10.2/bottom_x86_64-unknown-linux-musl.tar.gz
+https://github.com/bvaisvil/zenith/releases/download/0.14.1/zenith.x86_64-unknown-linux-musl.tgz
+https://github.com/fujiapple852/trippy/releases/download/0.13.0/trippy-0.13.0-x86_64-unknown-linux-musl.tar.gz
+```
 ----
 
 ## 2. lolcate
@@ -234,64 +382,140 @@ ian@iandeiMac ~/Library/Application Support/lolcate$ cat default/ignores
 # Use the same syntax as gitignore(5).
 # Common patterns:
 #
-.hg
-.git
 *~
-/Users/ian/Library/**
-node_modules
-node_modules__
-node_modules_2
-.vim
-.rvm
-.nvm
-.npm
-.composer
-.node-gyp
-.bundle
-.gem
-.Trash
 .android
+.aria2
 .aws
 .bash_sessions
 .bazel
+.beego
+.bundle
 .cache
 .cargo
+.chatgpt
 .cocoapods
+.colima
+.composer
 .composer_backup
 .config
+.cpan
 .cups
 .dlv
 .docker
+.fnm
+.frum
+.gem
+.git
+.gnupg
 .goldendict
 .gradle
 .greenflare
+.hg
 .httpie
+.idapro
 .idm
-.jetbrains
 .itmstransporter
+.jetbrains
+.kodi
+.kube
 .laradock
+.LfCache
 .lilypond-fonts.cache-2
 .lldb
 .local
 .m2
 .matplotlib
+.micro
 .nali
+.ne
 .node-gyp
+.npm
+.nvm
+.ollama
 .oracle_jre_usage
+.phpls
 .putty
 .rustup
+.rvm
+.serverless
+.ShadowsocksX
 .siege
+.sogouinput
 .soxy
 .ssh
 .subversion
+.swiftpm
+.tldrc
+.Trash
 .vagrant.d
+.vim
 .vim_bak_20210316120705
 .vim_runtime
-.vimpls
+.vimplus
+.vjp
 .vntrader
 .vscode
-.vjp
+.vscode-deploy-reloaded
+.w3m
+.WhistleAppData
+.yjp
 .zoomus
+.zsh_sessions
+/Users/ian/Library/**
+node_modules
+node_modules_2
+node_modules__
+屏幕快照
+
+ian@iandeiMac ~/Library/Application Support/lolcate$ cat not_ian/ignores
+# Dirs / files to ignore.
+# Use the same syntax as gitignore(5).
+# Common patterns:
+#
+/Users/ian
+/Users/Deleted Users/
+/Users/Guest/Library
+/Users/Shared/Previously Relocated Items/
+/Users/Shared/Previously Relocated Items 1/
+/Users/Shared/Previously Relocated Items 8/
+#
+# Common patterns:
+# Dirs / files to ignore.
+# Use the same syntax as gitignore(5).
+*~
+.android
+... (余下同 default)
+
+
+ian@iandeiMac ~/Library/Application Support/lolcate$ cat  usr_opt_private/ignores
+# Dirs / files to ignore.
+# Use the same syntax as gitignore(5).
+# Common patterns:
+#
+.git
+.hg
+*~
+/usr/X11
+/usr/X11R6
+/private/tmp
+/private/var
+
+ian@Ians-Mac-mini ~/Library/Application Support/lolcate$ cat library/ignores
+# Dirs / files to ignore.
+# Use the same syntax as gitignore(5).
+# Common patterns:
+#
+# .git
+# *~
+/Library/InstallerSandboxes/
+
+ian@Ians-Mac-mini ~/Library/Application Support/lolcate$ cat applications/ignores
+# Dirs / files to ignore.
+# Use the same syntax as gitignore(5).
+# Common patterns:
+#
+# .git
+# *~
 ```
 ### 2.4 其他数据库
 
@@ -303,7 +527,7 @@ node_modules_2
 | not_ian | "/Users" | 在 default的 ignores 基础上，再增加一些，如：<br></br>/Users/ian <br> /Users/Deleted Users/ |
 | usr_opt_private |   "/usr", "/opt", "/private" | .git <br> .hg <br> *~ <br> /usr/11 <br> /usr/X11R6 <br> /private/tmp <br> /private/var |
 | library | "/Library" | /Library/InstallerSandboxes/ |
-| application | "/Applications"  | 无 |
+| applications | "/Applications"  | 无 |
 
 ### 2.5 日常使用
 
@@ -425,15 +649,58 @@ not_ian:    3330
 usr_opt_private:  419624
 ```
 
+### 2.7 lc_update
+
+$ cat /usr/local/bin/lc_update
+```
+#!/usr/bin/env bash
+
+LOLCATE_DIR="/Users/ian/Library/Application Support/lolcate"
+
+PROJECTS="applications library not_ian usr_opt_private"
+
+set -exu
+for PROJECT in $PROJECTS
+do
+   echo
+   echo '---------'
+   echo $PROJECT
+   sudo lc --db $PROJECT --update
+done
+
+sudo lc --update
+```
 ----
 
 ## 3. generate_password
 
 ```
-$cat generate_password
-
 #!/usr/bin/env bash
-LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | head -c 16;echo
+
+echo
+echo "请选择随机密码中包括的字符集:"
+echo "1. A-Za-z0-9"
+echo "2. A-Za-z0-9!@#$%^&*()-_=+:"
+echo
+
+read -p "输入你的选择(1/2), 默认为1: " choice
+
+case $choice in
+    1)
+        charset='A-Za-z0-9'
+        ;;
+    2)
+        charset='A-Za-z0-9!@#$%^&*()-_=+:'
+        ;;
+    *)
+        charset='A-Za-z0-9'
+        ;;
+esac
+
+echo
+LC_ALL=C < /dev/urandom tr -dc "$charset" | head -c 16
+echo
+echo
 ```
 
 ----
@@ -657,11 +924,51 @@ export FNM_DIR="$HOME/.fnm"
 eval "$(fnm env --use-on-cd)"
 export FNM_LOGLEVEL=error
 
+export SCCACHE_CACHE_SIZE="5G"
+export SCCACHE_DIR="$HOME/.cargo/sccache"
+export RUSTC_WRAPPER="sccache"
+
 # git prompt
 source ~/.git-prompt.sh
 
 # hg prompt
 source ~/.hg-prompt.sh
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias o='open'
+alias s='open'
+alias k='kubectl'
+
+alias d='docker'
+alias dp='docker ps'
+alias di='docker images | sort -k7rn'
+alias dip='docker image prune -f'
+alias dc='docker-compose'
+
+alias hgpul='hg pul -u'
+alias hgst='hg st'
+
+# Change to the directory of a given filepath
+cdto() {
+    cd "$(dirname "$1")"
+}
+
+# List the most recent 10 files in a directory
+llt() {
+    DIR_TO_LIST=.
+    RECENT_N=10
+    if [ -n "$1" ]; then
+        DIR_TO_LIST=$1
+    fi
+    if [ -n "$2" ]; then
+        RECENT_N=$2
+    fi
+    ls -alt "$DIR_TO_LIST" | head -n "$RECENT_N"
+}
+
 ```
 
 #### 9.3.2 ~/.bash_profile
@@ -1374,4 +1681,66 @@ __git_ps1 ()
 
 	return $exit
 }
+```
+
+## 10. 在 x86 ubuntu22 下交叉编译得到 arm64 (也称为 aarch64) Linux 版本
+
+### 10.1 lolcate
+
+```
+$ rustup show
+Default host: x86_64-unknown-linux-gnu
+rustup home:  /root/.rustup
+
+installed toolchains
+--------------------
+
+stable-aarch64-unknown-linux-gnu
+stable-x86_64-unknown-linux-gnu (default)
+
+installed targets for active toolchain
+--------------------------------------
+
+aarch64-unknown-linux-gnu
+x86_64-unknown-linux-gnu
+x86_64-unknown-linux-musl
+
+active toolchain
+----------------
+
+stable-x86_64-unknown-linux-gnu (default)
+rustc 1.74.1 (a28077b28 2023-12-04)
+
+$ cargo build --release --target=aarch64-unknown-linux-gnu
+
+$ fd -HI lolcate
+
+$ aarch64-linux-gnu-readelf -a  ./target/aarch64-unknown-linux-gnu/release/lolcate|grep -o "Shared library: \[.*\]"
+Shared library: [libgcc_s.so.1]
+Shared library: [libc.so.6]
+Shared library: [ld-linux-aarch64.so.1]
+```
+
+### 10.2 czkawka_cli
+```
+$ cd ~/github/czkawka/czkawka_cli
+
+$ cat .cargo/config.toml
+[build]
+target = "aarch64-unknown-linux-gnu"
+
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc"
+
+$ cargo build --release --target=aarch64-unknown-linux-gnu
+
+$ cd ..
+
+$ fd -HI lolcate
+
+$ aarch64-linux-gnu-readelf -a ./target/aarch64-unknown-linux-gnu/release/czkawka_cli | grep -o "Shared library: \[.*\]"
+Shared library: [libgcc_s.so.1]
+Shared library: [libm.so.6]
+Shared library: [libc.so.6]
+Shared library: [ld-linux-aarch64.so.1]
 ```
